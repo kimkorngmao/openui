@@ -1,14 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: "class",
-  safelist: [
-    { pattern: /.*/ }, // Allows all Tailwind classes
-  ],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    './utility/**/*.{js,ts,jsx,tsx,mdx}',
+    "./public/components/**/*.html"
   ],
   theme: {
     extend: {

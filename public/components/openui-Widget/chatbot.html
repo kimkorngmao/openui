@@ -1,0 +1,62 @@
+<div class="max-h-screen min-h-[500px] flex flex-col max-w-screen-sm bg-white dark:bg-gray-900 shadow rounded-lg p-4 border border-gray-200 dark:border-gray-700 hover:shadow-md dark:hover:shadow-lg dark:hover:shadow-gray-800/50 transition-all duration-200">
+    <!-- Chat Header -->
+    <div class="flex items-center justify-between dark:border-gray-700 pb-4">
+        <div class="flex items-center space-x-1">
+          <img src="/images/001.png" alt="Profile Image" class="w-10 h-10 rounded-full border border-gray-200">
+          <div class="leading-4">
+            <h1 class="text-md font-semibold text-gray-800 dark:text-gray-100">Chan Noun</h1>
+            <small class="text-xs text-green-500 dark:text-green-400">Online</small>
+          </div>
+        </div>
+        <button class="p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+          <svg class="size-6 text-gray-600 dark:text-gray-300" xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-align-right"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l16 0" /><path d="M10 12l10 0" /><path d="M6 18l14 0" /></svg>
+        </button>
+    </div>  
+
+    <!-- Chat Messages -->
+    <div class="flex-1 overflow-y-auto space-y-4 pt-4 pb-8 px-1.5">
+      <!-- Assistant Message -->
+      <div class="flex justify-start">
+        <div class="text-sm bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg p-3 max-w-[70%]">
+          <p>Hi, how can I help you today?</p>
+        </div>
+      </div>
+
+      <!-- User Message -->
+      <div class="flex justify-end">
+        <div class="text-sm bg-gray-800 text-white rounded-lg p-3 max-w-[70%]">
+          <p>Hi, I need help with my account.</p>
+        </div>
+      </div>
+
+      <!-- Assistant Message -->
+      <div class="flex justify-start">
+        <div class="text-sm bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg p-3 max-w-[70%]">
+          <p>Sure, could you please provide more details about the issue you're facing?</p>
+        </div>
+      </div>
+
+      <!-- User Message -->
+      <div class="flex justify-end">
+        <div class="text-sm bg-gray-800 text-white rounded-lg p-3 max-w-[70%]">
+          <p>I'm having trouble resetting my password.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat Input -->
+    <div class="pt-4">
+      <div class="flex items-center space-x-2">
+        <input
+          type="text"
+          placeholder="Type a message..."
+          class="outline-none flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-800 dark:focus:ring-gray-300"
+        />
+        <button class="p-2 ring-1 ring-gray-800 bg-gray-800 dark:bg-gray-700 text-white rounded-lg hover:bg-gray-700 dark:hover:bg-gray-600">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
