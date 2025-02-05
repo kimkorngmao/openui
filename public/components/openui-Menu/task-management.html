@@ -1,0 +1,72 @@
+<div class="flex h-full w-full flex-col overflow-hidden text-gray-900 dark:text-gray-100 max-w-screen-sm bg-white dark:bg-gray-900 shadow rounded-lg p-4 border border-gray-200 dark:border-gray-700 hover:shadow-md dark:hover:shadow-lg dark:hover:shadow-gray-800/50 transition-all duration-200">
+    <!-- Hidden label for accessibility -->
+    <label for="search-input" class="sr-only">Search Input</label>
+
+    <!-- Search Input -->
+    <div class="flex items-center border-b px-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 h-4 w-4 opacity-50">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+        </svg>
+        <input class="flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-gray-400 dark:placeholder:text-gray-600" placeholder="Search tasks, projects, or deadlines..." autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" role="combobox" id="search-input" type="text">
+    </div>
+
+    <!-- List of Suggestions -->
+    <div class="max-h-[300px] overflow-y-auto" role="listbox" aria-label="Suggestions">
+        <div>
+            <!-- Tasks Group -->
+            <div class="overflow-hidden p-1 text-gray-900 dark:text-gray-100">
+                <div class="text-xs font-medium text-gray-500 dark:text-gray-600 py-1.5 px-2">Tasks</div>
+                <div role="group" aria-labelledby="tasks-heading">
+                    <!-- Task Item -->
+                    <div class="relative flex cursor-pointer gap-2 hover:bg-gray-100 dark:hover:bg-gray-700 items-center rounded-sm px-2 py-1.5 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                            <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect>
+                            <path d="m9 14 2 2 4-4"></path>
+                        </svg>
+                        <span>Complete Project Report</span>
+                    </div>
+                    <!-- Task Item -->
+                    <div class="relative flex cursor-pointer gap-2 hover:bg-gray-100 dark:hover:bg-gray-700 items-center rounded-sm px-2 py-1.5 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <circle cx="11.5" cy="12.5" r="2.5"></circle>
+                            <path d="M13.25 15.25 15 17"></path>
+                        </svg>
+                        <span>Review Design Mockups</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Separator -->
+            <div class="h-px bg-gray-200 dark:bg-gray-700"></div>
+
+            <!-- Projects Group -->
+            <div class="overflow-hidden p-1 text-gray-900 dark:text-gray-100">
+                <div class="text-xs font-medium text-gray-500 dark:text-gray-600 py-1.5 px-2">Projects</div>
+                <div role="group" aria-labelledby="projects-heading">
+                    <!-- Project Item -->
+                    <div class="relative flex cursor-pointer gap-2 hover:bg-gray-100 dark:hover:bg-gray-700 items-center rounded-sm px-2 py-1.5 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                            <rect width="7" height="9" x="3" y="3" rx="1"></rect>
+                            <rect width="7" height="5" x="14" y="3" rx="1"></rect>
+                            <rect width="7" height="9" x="14" y="12" rx="1"></rect>
+                            <rect width="7" height="5" x="3" y="16" rx="1"></rect>
+                        </svg>
+                        <span>Website Redesign</span>
+                    </div>
+                    <!-- Project Item -->
+                    <div class="relative flex cursor-pointer gap-2 hover:bg-gray-100 dark:hover:bg-gray-700 items-center rounded-sm px-2 py-1.5 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                            <rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect>
+                            <path d="M12 18h.01"></path>
+                        </svg>
+                        <span>Mobile App Development</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
