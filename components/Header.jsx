@@ -4,7 +4,7 @@ import { ThemeToggle } from "./ThemeToggle";
 
 export const Header = () => {
   return (
-    <header className="sticky top-0 bg-gray-50/80 dark:bg-gray-900/80 backdrop-blur-md flex items-center justify-between py-4" aria-label="Header">
+    <header className="z-50 sticky top-0 bg-gray-50/80 dark:bg-gray-900/80 backdrop-blur-md flex items-center justify-between py-4" aria-label="Header">
       <div className="flex items-center space-x-4">
         <Link href="/" className="flex items-center space-x-1 text-lg font-bold m-0 dark:text-white" aria-label="OpenUI Home">
           <svg

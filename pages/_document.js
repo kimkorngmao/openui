@@ -8,10 +8,10 @@ export default function Document() {
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png"/>
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png"/>
         <link rel="manifest" href="/site.webmanifest"/>
-        <meta name="description" content="Ship production-ready components with beautiful design. Copy & paste components tailored for modern web apps. Fully responsive, accessible, and dark mode ready."/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-        <title>OpenUI</title>
         <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet"/>
       </Head>
       <body className="antialiased bg-gray-50 dark:bg-gray-900">
         <Main />

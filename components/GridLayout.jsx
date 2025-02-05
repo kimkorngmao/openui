@@ -42,7 +42,7 @@ const GridLayout = ({ children }) => {
   return (
     <div id="getting-started" className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12`}>
       {lists.map((list, index) => (
-        <div className={`grid`} key={index}>
+        <div className={`grid gap-6`} key={index}>
           {list}
         </div>
       ))}

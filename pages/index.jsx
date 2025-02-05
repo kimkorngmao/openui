@@ -136,9 +136,9 @@ export default function Home({ filesContent, categories }) {
           <div className="flex gap-6 items-center overflow-x-auto scrollbar-hide py-3">
             <Link
               href="/"
-              className={`shrink-0 ${
+              className={`shrink-0 border-b-2 text-sm font-medium transition-colors border-transparent ${
                 !category
-                  ? "text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400"
+                  ? "text-blue-600 dark:text-blue-400 border-blue-600 dark:border-blue-400"
                   : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
               }`}
               aria-label="View all categories"
@@ -151,9 +151,9 @@ export default function Home({ filesContent, categories }) {
                 <Link
                   key={cat}
                   href={`/?category=${categoryName}`}
-                  className={`shrink-0 text-sm font-medium transition-colors ${
+                  className={`shrink-0 border-b-2 text-sm font-medium transition-colors border-transparent ${
                     category === categoryName
-                      ? "text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400"
+                      ? "text-blue-600 dark:text-blue-400 border-blue-600 dark:border-blue-400"
                       : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
                   }`}
                   aria-label={`View ${categoryName.replace(
@@ -173,7 +173,7 @@ export default function Home({ filesContent, categories }) {
             filesContent.map((file, index) => (
               <article
                 key={index}
-                className="h-fit relative group bg-white dark:bg-gray-800 shadow-sm hover:shadow-md dark:hover:shadow-lg dark:hover:shadow-gray-800/50 transition-all duration-200"
+                className="h-fit relative group shadow-sm hover:shadow-md dark:hover:shadow-lg dark:hover:shadow-gray-800/50 transition-all duration-200"
               >
                 <div
                   dangerouslySetInnerHTML={{ __html: file.content }}
@@ -187,6 +187,7 @@ export default function Home({ filesContent, categories }) {
                     href={`https://github.com/kimkorngmao/openui/tree/main/public/components/${file.category}/${file.fileName}`}
                     className="active:scale-95 flex items-center justify-center size-8 p-1 text-sm font-medium text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg"
                     aria-label="View file on GitHub"
+                    target="_blank"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -282,4 +283,24 @@ export default function Home({ filesContent, categories }) {
       </div>
     </main>
   );
+}
+
+export function componentPreviewJsx(componentHtml) {
+  return componentHtml
+    .replace(/class=/g, 'className=')
+    .replace(/for=/g, 'htmlFor=')
+    .replace(/viewBox=/g, 'viewBox=')
+    .replace(/fill-rule=/g, 'fillRule=')
+    .replace(/fill-opacity=/g, 'fillOpacity=')
+    .replace(/clip-rule=/g, 'clipRule=')
+    .replace(/stroke-linecap=/g, 'strokeLinecap=')
+    .replace(/stroke-linejoin=/g, 'strokeLinejoin=')
+    .replace(/stroke-width=/g, 'strokeWidth=')
+    .replace(/stroke-dasharray=/g, 'strokeDasharray=')
+    .replace(/stroke-dashoffset=/g, 'strokeDashoffset=')
+    .replace(/stroke-miterlimit=/g, 'strokeMiterlimit=')
+    .replace(/stroke-opacity=/g, 'strokeOpacity=')
+    .replace(/tabindex=/g, 'tabIndex=')
+    .replace(/<!--/g, '{/*')
+    .replace(/-->/g, '*/}')
 }
