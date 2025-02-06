@@ -9,6 +9,12 @@ import { useState } from "react";
 export async function getServerSideProps(context) {
   const { category } = context.query;
   const baseDir = path.join(process.cwd(), "public", "components");
+  const metaPath = path.join(process.cwd(), "public", "fileMeta.json");
+  let metadata = {};
+
+  if (fs.existsSync(metaPath)) {
+    metadata = JSON.parse(fs.readFileSync(metaPath, "utf-8"));
+  }
 
   let htmlFiles = [];
   let categories = [];
@@ -20,19 +26,22 @@ export async function getServerSideProps(context) {
   }
 
   if (category) {
-    const categoryDir = path.join(baseDir, `openui-${category}`);
+    const categoryFolder = `openui-${category}`;
+    const categoryDir = path.join(baseDir, categoryFolder);
     if (fs.existsSync(categoryDir)) {
       htmlFiles = fs
         .readdirSync(categoryDir)
         .filter((file) => file.endsWith(".html"))
         .map((file) => {
           const filePath = path.join(categoryDir, file);
-          const stats = fs.statSync(filePath); // Get file stats
           return {
             fileName: file,
             content: fs.readFileSync(filePath, "utf-8"),
-            category: `openui-${category}`,
-            createdAt: stats.birthtime, // Store the created date
+            category: categoryFolder,
+            // Look up created time from metadata
+            createdAt:
+              metadata[categoryFolder]?.find((f) => f.fileName === file)
+                ?.createdAt || null,
           };
         });
     }
@@ -44,12 +53,13 @@ export async function getServerSideProps(context) {
         .filter((file) => file.endsWith(".html"))
         .map((file) => {
           const filePath = path.join(folderPath, file);
-          const stats = fs.statSync(filePath); // Get file stats
           return {
             fileName: file,
             content: fs.readFileSync(filePath, "utf-8"),
             category: folder,
-            createdAt: stats.birthtime.toISOString(), // Store the created date
+            createdAt:
+              metadata[folder]?.find((f) => f.fileName === file)?.createdAt ||
+              null,
           };
         });
       htmlFiles.push(...files);
@@ -66,6 +76,7 @@ export async function getServerSideProps(context) {
     },
   };
 }
+
 
 
 export default function Home({ filesContent, categories }) {
