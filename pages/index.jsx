@@ -25,11 +25,16 @@ export async function getServerSideProps(context) {
       htmlFiles = fs
         .readdirSync(categoryDir)
         .filter((file) => file.endsWith(".html"))
-        .map((file) => ({
-          fileName: file,
-          content: fs.readFileSync(path.join(categoryDir, file), "utf-8"),
-          category: `openui-${category}`,
-        }));
+        .map((file) => {
+          const filePath = path.join(categoryDir, file);
+          const stats = fs.statSync(filePath); // Get file stats
+          return {
+            fileName: file,
+            content: fs.readFileSync(filePath, "utf-8"),
+            category: `openui-${category}`,
+            createdAt: stats.birthtime, // Store the created date
+          };
+        });
     }
   } else {
     categories.forEach((folder) => {
@@ -37,14 +42,22 @@ export async function getServerSideProps(context) {
       const files = fs
         .readdirSync(folderPath)
         .filter((file) => file.endsWith(".html"))
-        .map((file) => ({
-          fileName: file,
-          content: fs.readFileSync(path.join(folderPath, file), "utf-8"),
-          category: folder,
-        }));
+        .map((file) => {
+          const filePath = path.join(folderPath, file);
+          const stats = fs.statSync(filePath); // Get file stats
+          return {
+            fileName: file,
+            content: fs.readFileSync(filePath, "utf-8"),
+            category: folder,
+            createdAt: stats.birthtime.toISOString(), // Store the created date
+          };
+        });
       htmlFiles.push(...files);
     });
   }
+
+  // Sort files by created date (newest first)
+  htmlFiles.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   return {
     props: {
@@ -53,6 +66,7 @@ export async function getServerSideProps(context) {
     },
   };
 }
+
 
 export default function Home({ filesContent, categories }) {
   const [copied, setCopied] = useState(false);
