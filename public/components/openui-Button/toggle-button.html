@@ -1,0 +1,22 @@
+<div class="pb-10 flex gap-4 items-center justify-between max-w-screen-sm bg-white dark:bg-gray-800 shadow-sm rounded-lg p-4 border border-gray-200 dark:border-gray-700 hover:shadow-md dark:hover:shadow-lg dark:hover:shadow-gray-800/50 transition-all duration-200">
+    <label for="toggle" class="mr-2 text-gray-700"><h2 class="text-gray-800 dark:text-white font-medium">Switch</h2></label>
+    <div class="flex items-center">
+        <label for="toggle" class="mr-2 text-gray-700">
+            <input type="checkbox" id="toggle" class="hidden">
+            <div class="relative">
+                <div class="block w-10 h-6 bg-gray-300 rounded-full cursor-pointer"></div>
+                <div class="dot absolute w-4 h-4 bg-white rounded-full transition duration-200 ease-in-out transform left-1 top-1">
+                </div>
+            </div>
+        </label>
+    </div>
+</div>
+<style>
+    #toggle:checked+.relative .dot {
+        transform: translateX(100%);
+    }
+
+    #toggle:checked+.relative .block {
+        background-color: #4CAF50;
+    }
+</style>
