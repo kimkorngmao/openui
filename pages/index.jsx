@@ -89,9 +89,7 @@ export default function Home({ filesContent, categories }) {
   return (
     <main className="max-w-6xl mx-auto min-h-screen">
       <Head>
-        <title>
-          {category ? `${category.charAt(0).toUpperCase() + category.slice(1)} Components` : 'All Components'} - OpenUI
-        </title>
+      <title>{`${category ? category.charAt(0).toUpperCase() + category.slice(1) + " Components" : "All Components"} - OpenUI`}</title>
       </Head>
       <div className="flex-1 px-6 lg:px-8 min-h-screen">
         <Header />
