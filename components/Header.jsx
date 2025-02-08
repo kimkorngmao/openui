@@ -8,7 +8,7 @@ export const Header = () => {
       <div className="flex items-center space-x-4">
         <Link href="/" className="flex items-center space-x-1 text-lg font-bold m-0 dark:text-white" aria-label="OpenUI Home">
           <svg
-            className="size-5 mt-1"
+            className="size-5"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -23,6 +23,7 @@ export const Header = () => {
             />
           </svg>
           <h1>openui</h1>
+          <div className="sr-only">OpenUI by Korng</div>
         </Link>
       </div>
       <div className="flex items-center gap-4">

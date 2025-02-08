@@ -69,4 +69,4 @@ We welcome contributions! Feel free to submit issues or pull requests.
 This project is licensed under the MIT License.
 
 ## Author
-Made with ❤️ by [
+Made with ❤️ by [Korng](https://kimkorngmao.com/)

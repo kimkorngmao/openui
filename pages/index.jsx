@@ -5,56 +5,40 @@ import path from "path";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import Head from "next/head";
 
 export async function getServerSideProps(context) {
   const { category } = context.query;
-  const baseDir = path.join(process.cwd(), "public", "components");
+  const filesMapPath = path.join(process.cwd(), "filesmap.json");
 
-  let htmlFiles = [];
+  let filesList = [];
   let categories = [];
 
-  if (fs.existsSync(baseDir)) {
-    categories = fs
-      .readdirSync(baseDir)
-      .filter((item) => fs.statSync(path.join(baseDir, item)).isDirectory());
-  }
+  if (fs.existsSync(filesMapPath)) {
+    const filesMap = JSON.parse(fs.readFileSync(filesMapPath, "utf-8"));
+    categories = [...new Set(filesMap.map((file) => file.category))];
 
-  if (category) {
-    const categoryDir = path.join(baseDir, `openui-${category}`);
-    if (fs.existsSync(categoryDir)) {
-      htmlFiles = fs
-        .readdirSync(categoryDir)
-        .filter((file) => file.endsWith(".html"))
-        .map((file) => {
-          const filePath = path.join(categoryDir, file);
-          return {
-            fileName: file,
-            content: fs.readFileSync(filePath, "utf-8"),
-            category: `openui-${category}`,
-          };
-        });
-    }
-  } else {
-    categories.forEach((folder) => {
-      const folderPath = path.join(baseDir, folder);
-      const files = fs
-        .readdirSync(folderPath)
-        .filter((file) => file.endsWith(".html"))
-        .map((file) => {
-          const filePath = path.join(folderPath, file);
-          return {
-            fileName: file,
-            content: fs.readFileSync(filePath, "utf-8"),
-            category: folder
-          };
-        });
-      htmlFiles.push(...files);
+    filesList = category
+      ? filesMap.filter((file) => file.category === `openui-${category}`)
+      : filesMap;
+
+    filesList = filesList.map((file) => ({
+      ...file,
+      content: fs.readFileSync(path.join(process.cwd(), file.path), "utf-8"),
+    }));
+
+    // Sort by isPinned first, then by createdAt descending
+    filesList.sort((a, b) => {
+      if (a.isPinned === b.isPinned) {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      }
+      return b.isPinned - a.isPinned;
     });
   }
 
   return {
     props: {
-      filesContent: htmlFiles,
+      filesContent: filesList,
       categories,
     },
   };
@@ -75,6 +59,11 @@ export default function Home({ filesContent, categories }) {
 
   return (
     <main className="max-w-6xl mx-auto min-h-screen">
+      <Head>
+        <title>
+          {category ? `${category.charAt(0).toUpperCase() + category.slice(1)} Components` : 'All Components'} - OpenUI
+        </title>
+      </Head>
       <div className="flex-1 px-6 lg:px-8 min-h-screen">
         <Header />
 
