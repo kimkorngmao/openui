@@ -22,7 +22,7 @@ const getFilesRecursively = (dir, category = "") => {
   const files = fs.readdirSync(dir);
   files.forEach((file) => {
     const filePath = path.join(dir, file);
-    const relativePath = path.join(file);
+    const relativePath = path.join(category, file);
 
     if (fs.statSync(filePath).isDirectory()) {
       getFilesRecursively(filePath, relativePath);

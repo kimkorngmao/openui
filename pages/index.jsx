@@ -27,8 +27,6 @@ export async function getServerSideProps(context) {
       .filter((item) => fs.statSync(path.join(baseDir, item)).isDirectory());
   }
 
-  console.log(fileMap)
-
   const processFiles = (folder, folderPath) => {
     return fs
       .readdirSync(folderPath)
@@ -36,16 +34,14 @@ export async function getServerSideProps(context) {
       .map((file) => {
         const filePath = path.join(folderPath, file);
         const content = fs.readFileSync(filePath, "utf-8");
-        const fileKey = `${folder}/${file}`;
-
-        console.log(file)
+        const fileKey = `${folder}\\${file}`;
 
         return {
           fileName: file,
           content,
           category: folder,
-          createdAt: fileMap[file]?.createdAt || "1970-01-01T00:00:00Z", // Default to oldest
-          isPinned: fileMap[file]?.isPinned || false,
+          createdAt: fileMap[fileKey]?.createdAt || "1970-01-01T00:00:00Z", // Default to oldest
+          isPinned: fileMap[fileKey]?.isPinned || false,
         };
       });
   };
@@ -67,7 +63,7 @@ export async function getServerSideProps(context) {
     if (a.isPinned === b.isPinned) {
       return new Date(b.createdAt) - new Date(a.createdAt);
     }
-    return new Date(b.createdAt) - new Date(a.createdAt);
+    return b.isPinned - a.isPinned;
   });
 
   return {
