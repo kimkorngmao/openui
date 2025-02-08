@@ -1,37 +1,55 @@
-import fs from "fs";
-import path from "path";
+const fs = require("fs");
+const path = require("path");
 
 const baseDir = path.join(process.cwd(), "public", "components");
-const filesMapPath = path.join(process.cwd(), "filesmap.json");
+const outputFilePath = path.join(baseDir, "fileMaps.json");
 
-const pinnedFiles = ['music-player.html', 'credit-card.html']
+let fileMap = {};
 
-let filesMap = [];
+// Load existing fileMaps.json if it exists
+if (fs.existsSync(outputFilePath)) {
+  try {
+    const rawData = fs.readFileSync(outputFilePath, "utf-8");
+    fileMap = JSON.parse(rawData);
+  } catch (error) {
+    console.error("⚠️ Error reading existing fileMaps.json: ", error);
+  }
+}
 
+const getFilesRecursively = (dir, category = "") => {
+  if (!fs.existsSync(dir)) return;
+
+  const files = fs.readdirSync(dir);
+  files.forEach((file) => {
+    const filePath = path.join(dir, file);
+    const relativePath = path.join(file);
+
+    if (fs.statSync(filePath).isDirectory()) {
+      getFilesRecursively(filePath, relativePath);
+    } else if (file.endsWith(".html")) {
+      if (!fileMap[relativePath]) {
+        const stats = fs.statSync(filePath);
+        fileMap[relativePath] = {
+          createdAt: stats.birthtime.toISOString(),
+          isPinned: false,
+        };
+      }
+    }
+  });
+};
+
+// Start scanning
 if (fs.existsSync(baseDir)) {
   const categories = fs.readdirSync(baseDir).filter((item) =>
     fs.statSync(path.join(baseDir, item)).isDirectory()
   );
 
   categories.forEach((category) => {
-    const categoryDir = path.join(baseDir, category);
-    const files = fs.readdirSync(categoryDir).filter((file) => file.endsWith(".html"));
-
-    files.forEach((file) => {
-      const filePath = path.join(categoryDir, file);
-      const stats = fs.statSync(filePath);
-      
-      filesMap.push({
-        path: `public/components/${category}/${file}`,
-        fileName: file,
-        category: category,
-        createdAt: stats.birthtime.toISOString(), 
-        isPinned: pinnedFiles.includes(file)
-      });
-    });
+    getFilesRecursively(path.join(baseDir, category), category);
   });
 }
 
-fs.writeFileSync(filesMapPath, JSON.stringify(filesMap, null, 2), "utf-8");
+// Write updated JSON file
+fs.writeFileSync(outputFilePath, JSON.stringify(fileMap, null, 2));
 
-console.log("filesmap.json has been generated successfully!");
+console.log(`✅ fileMaps.json updated at: ${outputFilePath}`);

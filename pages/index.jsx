@@ -9,41 +9,74 @@ import Head from "next/head";
 
 export async function getServerSideProps(context) {
   const { category } = context.query;
-  const filesMapPath = path.join(process.cwd(), "filesmap.json");
+  const baseDir = path.join(process.cwd(), "public", "components");
+  const fileMapPath = path.join(baseDir, "fileMaps.json"); // Adjust path if necessary
 
-  let filesList = [];
+  let htmlFiles = [];
   let categories = [];
+  let fileMap = {};
 
-  if (fs.existsSync(filesMapPath)) {
-    const filesMap = JSON.parse(fs.readFileSync(filesMapPath, "utf-8"));
-    categories = [...new Set(filesMap.map((file) => file.category))];
+  // Read file map JSON if it exists
+  if (fs.existsSync(fileMapPath)) {
+    fileMap = JSON.parse(fs.readFileSync(fileMapPath, "utf-8"));
+  }
 
-    filesList = category
-      ? filesMap.filter((file) => file.category === `openui-${category}`)
-      : filesMap;
+  if (fs.existsSync(baseDir)) {
+    categories = fs
+      .readdirSync(baseDir)
+      .filter((item) => fs.statSync(path.join(baseDir, item)).isDirectory());
+  }
 
-    filesList = filesList.map((file) => ({
-      ...file,
-      content: fs.readFileSync(path.join(process.cwd(), file.path), "utf-8"),
-    }));
+  console.log(fileMap)
 
-    // Sort by isPinned first, then by createdAt descending
-    filesList.sort((a, b) => {
-      if (a.isPinned === b.isPinned) {
-        return new Date(b.createdAt) - new Date(a.createdAt);
-      }
-      return b.isPinned - a.isPinned;
+  const processFiles = (folder, folderPath) => {
+    return fs
+      .readdirSync(folderPath)
+      .filter((file) => file.endsWith(".html"))
+      .map((file) => {
+        const filePath = path.join(folderPath, file);
+        const content = fs.readFileSync(filePath, "utf-8");
+        const fileKey = `${folder}/${file}`;
+
+        console.log(file)
+
+        return {
+          fileName: file,
+          content,
+          category: folder,
+          createdAt: fileMap[file]?.createdAt || "1970-01-01T00:00:00Z", // Default to oldest
+          isPinned: fileMap[file]?.isPinned || false,
+        };
+      });
+  };
+
+  if (category) {
+    const categoryDir = path.join(baseDir, `openui-${category}`);
+    if (fs.existsSync(categoryDir)) {
+      htmlFiles = processFiles(`openui-${category}`, categoryDir);
+    }
+  } else {
+    categories.forEach((folder) => {
+      const folderPath = path.join(baseDir, folder);
+      htmlFiles.push(...processFiles(folder, folderPath));
     });
   }
 
+  // Sort by isPinned first, then by createdAt (newest first)
+  htmlFiles.sort((a, b) => {
+    if (a.isPinned === b.isPinned) {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    }
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
+
   return {
     props: {
-      filesContent: filesList,
+      filesContent: htmlFiles,
       categories,
     },
   };
 }
-
 
 export default function Home({ filesContent, categories }) {
   const [copied, setCopied] = useState(false);
