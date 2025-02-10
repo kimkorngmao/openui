@@ -45,7 +45,7 @@ export const Header = () => {
         </Link>
         <ThemeToggle />
         {/* <Link
-          href=""
+         
           className="p-1 rounded-lg bg-gray-100 hover:bg-gray-200 dark:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
           aria-label="Register"
         >
